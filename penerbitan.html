@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN - SENARAI PENERBITAN</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-icon {
+            font-size: 28px;
+            opacity: 0.22;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .section-note {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .cover-box {
+            height: 180px;
+            border: 1px solid #e7eaec;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1ab394, #1c84c6);
+            color: #fff;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .cover-box h4 {
+                color: #fff;
+                font-weight: 700;
+            }
+
+            .cover-box .year-tag {
+                position: absolute;
+                right: 15px;
+                top: 15px;
+                background: rgba(255,255,255,0.18);
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .cover-box .bottom-meta {
+                position: absolute;
+                left: 18px;
+                bottom: 18px;
+                font-size: 12px;
+                opacity: 0.95;
+            }
+
+        .action-btn-group .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .filter-box .form-group {
+            margin-bottom: 10px;
+        }
+
+        .badge-soft {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-book {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .badge-prosiding {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .badge-kertas {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .quick-stat {
+            margin-bottom: 10px;
+        }
+
+            .quick-stat strong {
+                display: block;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .quick-stat small {
+                color: #888;
+            }
+
+        .publication-meta {
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li><a href="#">Rekod Spesies</a></li>
+                            <li><a href="#">Import Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="laporan.html">Laporan Standard</a></li>
+                            <li><a href="#">Dashboard Analitik</a></li>
+                            <li><a href="#">Statistik Negeri</a></li>
+                            <li><a href="#">Export Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label"><a href="Penerbitan.html">Peta Interaktif</a></span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse in">
+                            <li class="active"><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="upload.html">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian tajuk, penulis, tahun, kata kunci..." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Selamat Datang, Amirul</span>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- TITLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h2 class="font-bold">Senarai Penerbitan</h2>
+                                        <p class="section-note">
+                                            Pengurusan buku prosiding, kertas kerja dan penerbitan berkaitan ekspedisi saintifik, persampelan serta petak kajian biodiversiti hutan.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 text-right action-btn-group">
+                                        <button class="btn btn-default"><i class="fa fa-upload"></i> Muat Naik Prosiding</button>
+                                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Penerbitan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- KPI -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Jumlah Penerbitan</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Semua rekod</div>
+                                <div class="mini-stat-value">54</div>
+                                <small>Buku dan prosiding</small>
+                                <i class="fa fa-book kpi-icon text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Kertas Kerja</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Rekod dimuat naik</div>
+                                <div class="mini-stat-value">128</div>
+                                <small>Artikel / kertas kerja</small>
+                                <i class="fa fa-file-text-o kpi-icon text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Tahun Terkini</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Penerbitan aktif</div>
+                                <div class="mini-stat-value">2026</div>
+                                <small>Kemas kini semasa</small>
+                                <i class="fa fa-calendar kpi-icon text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Perlu Semakan</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Menunggu pengesahan</div>
+                                <div class="mini-stat-value">6</div>
+                                <small>Prosiding / artikel baharu</small>
+                                <i class="fa fa-check-square-o kpi-icon text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- FILTER + FEATURED -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Carian & Penapis</h5>
+                            </div>
+                            <div class="ibox-content filter-box">
+                                <div class="form-group">
+                                    <label>Tajuk / Kata Kunci</label>
+                                    <input type="text" class="form-control" placeholder="Contoh: Endau-Rompin, flora, prosiding">
+                                </div>
+                                <div class="form-group">
+                                    <label>Jenis Penerbitan</label>
+                                    <select class="form-control">
+                                        <option>Semua</option>
+                                        <option>Prosiding</option>
+                                        <option>Kertas Kerja</option>
+                                        <option>Buku</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tahun</label>
+                                    <select class="form-control">
+                                        <option>Semua</option>
+                                        <option>2026</option>
+                                        <option>2025</option>
+                                        <option>2024</option>
+                                        <option>2023</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Modul Berkaitan</label>
+                                    <select class="form-control">
+                                        <option>Semua</option>
+                                        <option>Ekspedisi</option>
+                                        <option>Persampelan</option>
+                                        <option>Petak Kajian</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Negeri</label>
+                                    <select class="form-control">
+                                        <option>Semua Negeri</option>
+                                        <option>Pahang</option>
+                                        <option>Perak</option>
+                                        <option>Johor</option>
+                                        <option>Kelantan</option>
+                                        <option>Terengganu</option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn-primary btn-block">Tapis Rekod</button>
+                                <button class="btn btn-white btn-block">Set Semula</button>
+                            </div>
+                        </div>
+
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Ringkasan Pantas</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="quick-stat">
+                                    <strong>12</strong>
+                                    <small>Prosiding ekspedisi saintifik</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>8</strong>
+                                    <small>Penerbitan persampelan</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>6</strong>
+                                    <small>Penerbitan petak kajian</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>Pahang</strong>
+                                    <small>Negeri dengan rekod terbanyak</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        
+
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Senarai Penerbitan</h5>
+                            </div>
+                            <div class="ibox-content table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="publicationTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Bil.</th>
+                                            <th>Tajuk Penerbitan</th>
+                                            <th>Jenis</th>
+                                            <th>Modul</th>
+                                            <th>Tahun</th>
+                                            <th>Penulis / Penyusun</th>
+                                            <th>Status</th>
+                                            <th>Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                Prosiding Biodiversiti Hutan Pahang Tengah
+                                                <div class="publication-meta">ISBN: 978-967-0001-01-2</div>
+                                            </td>
+                                            <td><span class="badge-soft badge-prosiding">Prosiding</span></td>
+                                            <td>Ekspedisi</td>
+                                            <td>2026</td>
+                                            <td>Dr Razlina Raghazli</td>
+                                            <td><span class="label label-primary">Diluluskan</span></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Lihat</button>
+                                                <button class="btn btn-xs btn-white">Muat Turun</button>
+                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>
+                                                Senarai Kertas Kerja Persampelan Endau-Rompin
+                                                <div class="publication-meta">8 artikel berkaitan flora dan serangga</div>
+                                            </td>
+                                            <td><span class="badge-soft badge-kertas">Kertas Kerja</span></td>
+                                            <td>Persampelan</td>
+                                            <td>2025</td>
+                                            <td>Unit Biodiversiti JPSM</td>
+                                            <td><span class="label label-warning">Pending</span></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Lihat</button>
+                                                <button class="btn btn-xs btn-white">Muat Turun</button>
+                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>
+                                                Buku Laporan Petak Kajian HCVA Pahang
+                                                <div class="publication-meta">Rujukan pemantauan petak kajian</div>
+                                            </td>
+                                            <td><span class="badge-soft badge-book">Buku</span></td>
+                                            <td>Petak Kajian</td>
+                                            <td>2024</td>
+                                            <td>Bahagian Biodiversiti</td>
+                                            <td><span class="label label-primary">Diluluskan</span></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Lihat</button>
+                                                <button class="btn btn-xs btn-white">Muat Turun</button>
+                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>
+                                                Prosiding Seminar Biodiversiti Hutan Simpan Perak
+                                                <div class="publication-meta">Mengandungi 10 kertas kerja</div>
+                                            </td>
+                                            <td><span class="badge-soft badge-prosiding">Prosiding</span></td>
+                                            <td>Ekspedisi</td>
+                                            <td>2023</td>
+                                            <td>JPN Perak</td>
+                                            <td><span class="label label-info">Semakan</span></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Lihat</button>
+                                                <button class="btn btn-xs btn-white">Muat Turun</button>
+                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>
+                                                Katalog Penemuan Flora Endemik Semenanjung Malaysia
+                                                <div class="publication-meta">Kompilasi rujukan biodiversiti</div>
+                                            </td>
+                                            <td><span class="badge-soft badge-book">Buku</span></td>
+                                            <td>Persampelan</td>
+                                            <td>2022</td>
+                                            <td>Unit Penyelidikan</td>
+                                            <td><span class="label label-primary">Diluluskan</span></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-info">Lihat</button>
+                                                <button class="btn btn-xs btn-white">Muat Turun</button>
+                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Modul Penerbitan - Sistem Biodiversiti Hutan
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $('#publicationTable').DataTable({
+            pageLength: 5,
+            responsive: true
+        });
+    });
+    </script>
+
+</body>
+</html>

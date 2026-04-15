@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN - SENARAI PENERBITAN</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-icon {
+            font-size: 28px;
+            opacity: 0.22;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .section-note {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .cover-box {
+            height: 180px;
+            border: 1px solid #e7eaec;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1ab394, #1c84c6);
+            color: #fff;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .cover-box h4 {
+                color: #fff;
+                font-weight: 700;
+            }
+
+            .cover-box .year-tag {
+                position: absolute;
+                right: 15px;
+                top: 15px;
+                background: rgba(255,255,255,0.18);
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .cover-box .bottom-meta {
+                position: absolute;
+                left: 18px;
+                bottom: 18px;
+                font-size: 12px;
+                opacity: 0.95;
+            }
+
+        .action-btn-group .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .filter-box .form-group {
+            margin-bottom: 10px;
+        }
+
+        .badge-soft {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-book {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .badge-prosiding {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .badge-kertas {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .quick-stat {
+            margin-bottom: 10px;
+        }
+
+            .quick-stat strong {
+                display: block;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .quick-stat small {
+                color: #888;
+            }
+
+        .publication-meta {
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li><a href="#">Rekod Spesies</a></li>
+                            <li><a href="#">Import Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="laporan.html">Laporan Standard</a></li>
+                            <li><a href="#">Dashboard Analitik</a></li>
+                            <li><a href="#">Statistik Negeri</a></li>
+                            <li><a href="#">Export Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label"><a href="Penerbitan.html">Peta Interaktif</a></span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse in">
+                            <li ><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li class="active"><a href="upload.html">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian tajuk, penulis, tahun, kata kunci..." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                     
+                        <li>
+                            <a href="index.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- TITLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h2 class="font-bold">Muat Naik Prosiding / Penerbitan</h2>
+                                        <p class="section-note">
+                                            Masukkan maklumat penerbitan dan muat naik fail prosiding atau kertas kerja berkaitan biodiversiti hutan.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 text-right action-btn-group">
+           
+                                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox">
+                    <div class="ibox-content">
+
+                        <!-- BASIC INFO -->
+                        <div class="form-section">
+                            <div class="section-title">Maklumat Penerbitan</div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Tajuk Prosiding</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Tahun</label>
+                                    <input type="number" class="form-control" value="2026">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Jenis</label>
+                                    <select class="form-control">
+                                        <option>Prosiding</option>
+                                        <option>Kertas Kerja</option>
+                                        <option>Buku</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row m-t-sm">
+                                <div class="col-md-4">
+                                    <label>Modul Berkaitan</label>
+                                    <select class="form-control">
+                                        <option>Ekspedisi</option>
+                                        <option>Persampelan</option>
+                                        <option>Petak Kajian</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Negeri</label>
+                                    <select class="form-control">
+                                        <option>Pahang</option>
+                                        <option>Johor</option>
+                                        <option>Perak</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>ISBN / No Rujukan</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group m-t-sm">
+                                <label>Penulis / Penyusun</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ringkasan / Abstrak</label>
+                                <textarea class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- FILE UPLOAD -->
+                        <div class="form-section">
+                            <div class="section-title">Muat Naik Fail</div>
+
+                            <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+                                <div class="upload-icon"><i class="fa fa-cloud-upload"></i></div>
+                                <h4>Drag & Drop atau Klik untuk Upload</h4>
+                                <small>Format: PDF, DOCX (Max 20MB)</small>
+                                <input type="file" id="fileInput" style="display:none;">
+                            </div>
+                        </div>
+
+                        <!-- STATUS -->
+                        <div class="form-section">
+                            <div class="section-title">Status & Pengesahan</div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Status</label>
+                                    <select class="form-control">
+                                        <option>Draf</option>
+                                        <option>Hantar untuk Pengesahan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Pegawai Pengesah</label>
+                                    <input type="text" class="form-control" value="Pn Noraini">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="text-right">
+                            <button class="btn btn-white">Batal</button>
+                            <button class="btn btn-default">Simpan Draf</button>
+                            <button class="btn btn-primary">Hantar</button>
+                        </div>
+
+                    </div>
+                </div>
+                 
+
+ 
+                 
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Modul Penerbitan - Sistem Biodiversiti Hutan
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $('#publicationTable').DataTable({
+            pageLength: 5,
+            responsive: true
+        });
+    });
+    </script>
+
+</body>
+</html>
