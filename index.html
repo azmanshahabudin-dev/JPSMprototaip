@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 420px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e7eaec;
+        }
+
+        .kpi-icon {
+            font-size: 28px;
+            opacity: 0.25;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-subtitle {
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .feed-element .desc {
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .status-approved {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .status-review {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 6px;
+            border-radius: 50%;
+        }
+
+        .map-legend {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .quick-link-box a {
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f3f4;
+            color: #333;
+        }
+
+            .quick-link-box a:last-child {
+                border-bottom: none;
+            }
+
+            .quick-link-box a:hover {
+                color: #1ab394;
+            }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li><a href="#">Rekod Spesies</a></li>
+                            <li><a href="#">Import Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="laporan.html">Laporan Standard</a></li>
+                            <li><a href="#">Dashboard Analitik</a></li>
+                            <li><a href="#">Statistik Negeri</a></li>
+                            <li><a href="#">Export Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label">Penerbitan</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="#">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian spesies, lokasi, prosiding..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Selamat Datang, Amirul</span>
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">3</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <div>
+                                            <small class="float-right">2 jam lalu</small>
+                                            <strong>2 prosiding baharu</strong> telah dimuat naik.
+                                            <br>
+                                            <small class="text-muted">16.04.2026 - 10:30 pagi</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <div>
+                                            <small class="float-right text-navy">5 jam lalu</small>
+                                            <strong>5 rekod persampelan</strong> menunggu pengesahan.
+                                            <br>
+                                            <small class="text-muted">16.04.2026 - 7:15 pagi</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- PAGE TITLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h2 class="font-bold">Dashboard Sistem Kepelbagaian Biologi Hutan</h2>
+                                <p class="dashboard-subtitle">
+                                    Pusat pemantauan utama bagi pengurusan data biodiversiti, aktiviti lapangan, status pengesahan dan visualisasi GIS di Semenanjung Malaysia.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title">
+                                <h5>Jumlah Ekspedisi</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Sehingga April 2026</div>
+                                <div class="mini-stat-value">48</div>
+                                <small>Aktiviti ekspedisi direkodkan</small>
+                                <i class="fa fa-compass kpi-icon text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title">
+                                <h5>Rekod Spesies</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Pangkalan data semasa</div>
+                                <div class="mini-stat-value">1,208</div>
+                                <small>Spesies flora & fauna</small>
+                                <i class="fa fa-leaf kpi-icon text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title">
+                                <h5>Petak Kajian Aktif</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">HCVA / VJR / Arboretum / Ekologi</div>
+                                <div class="mini-stat-value">181</div>
+                                <small>Petak kajian aktif</small>
+                                <i class="fa fa-map-marker kpi-icon text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title">
+                                <h5>Menunggu Pengesahan</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Permohonan & rekod data</div>
+                                <div class="mini-stat-value">17</div>
+                                <small>Memerlukan semakan pengguna pengesah</small>
+                                <i class="fa fa-check-square-o kpi-icon text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAP + QUICK LINKS -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Peta Biodiversiti Hutan Semenanjung Malaysia</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row m-b-sm">
+                                    <div class="col-md-4">
+                                        <select class="form-control">
+                                            <option>Semua Negeri</option>
+                                            <option>Pahang</option>
+                                            <option>Perak</option>
+                                            <option>Johor</option>
+                                            <option>Kelantan</option>
+                                            <option>Terengganu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control">
+                                            <option>Semua Layer</option>
+                                            <option>Ekspedisi</option>
+                                            <option>Persampelan</option>
+                                            <option>Petak Kajian</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-primary btn-block">Tapis Paparan</button>
+                                    </div>
+                                </div>
+
+                                <div id="map"></div>
+
+                                <div class="map-legend">
+                                    <span class="legend-box" style="background:#1c84c6;"></span> Ekspedisi
+                                    &nbsp;&nbsp;
+                                    <span class="legend-box" style="background:#f8ac59;"></span> Persampelan
+                                    &nbsp;&nbsp;
+                                    <span class="legend-box" style="background:#1ab394;"></span> Petak Kajian
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Pautan Pantas</h5>
+                            </div>
+                            <div class="ibox-content quick-link-box">
+                                <a href="ekspedisi.html"><i class="fa fa-plus-circle"></i> Daftar Ekspedisi Baharu</a>
+                                <a href="persampelan.html"><i class="fa fa-plus-circle"></i> Tambah Rekod Persampelan</a>
+                                <a href="petak.html"><i class="fa fa-map-o"></i> Kemaskini Petak Kajian</a>
+                                <a href="penerbitan.html"><i class="fa fa-upload"></i> Muat Naik Prosiding</a>
+                                <a href="user.html"><i class="fa fa-user"></i> Semak Permohonan Pengguna</a>
+                            </div>
+                        </div>
+
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Status Pengesahan Data</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p><strong>Ekspedisi</strong> <span class="status-badge status-pending float-right">5 Pending</span></p>
+                                <hr>
+                                <p><strong>Persampelan</strong> <span class="status-badge status-review float-right">9 Semakan</span></p>
+                                <hr>
+                                <p><strong>Petak Kajian</strong> <span class="status-badge status-approved float-right">3 Lulus</span></p>
+                                <hr>
+                                <p><strong>Penerbitan</strong> <span class="status-badge status-pending float-right">2 Pending</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHART + ACTIVITY -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Trend Rekod Biodiversiti Mengikut Tahun</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="biodiversityChart" height="110"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Aktiviti Terkini</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="feed-activity-list">
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">10 min lalu</small>
+                                            <strong>Dr Razlina</strong>
+                                            <div class="desc">Memuat naik 2 prosiding baharu bagi ekspedisi biodiversiti.</div>
+                                            <small class="text-muted">16.04.2026 - 10:50 pagi</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">1 jam lalu</small>
+                                            <strong>Unit Persampelan</strong>
+                                            <div class="desc">Menambah 5 rekod persampelan spesies di Endau-Rompin.</div>
+                                            <small class="text-muted">16.04.2026 - 9:40 pagi</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">3 jam lalu</small>
+                                            <strong>Pentadbir Sistem</strong>
+                                            <div class="desc">Meluluskan 3 permohonan pendaftaran pengguna baharu.</div>
+                                            <small class="text-muted">16.04.2026 - 7:20 pagi</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">Semalam</small>
+                                            <strong>Bahagian Biodiversiti</strong>
+                                            <div class="desc">Mengemaskini data petak kajian HCVA di Pahang.</div>
+                                            <small class="text-muted">15.04.2026 - 4:10 petang</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- TABLE + SUMMARY -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Senarai Rekod Terkini</h5>
+                            </div>
+                            <div class="ibox-content table-responsive">
+                                <table class="table table-hover no-margins">
+                                    <thead>
+                                        <tr>
+                                            <th>Tarikh</th>
+                                            <th>Modul</th>
+                                            <th>Lokasi</th>
+                                            <th>Status</th>
+                                            <th>Perekod</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>16.04.2026</td>
+                                            <td>Ekspedisi</td>
+                                            <td>Taman Negara, Pahang</td>
+                                            <td><span class="label label-warning">Pending</span></td>
+                                            <td>Dr Razlina</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16.04.2026</td>
+                                            <td>Persampelan</td>
+                                            <td>Endau-Rompin, Johor</td>
+                                            <td><span class="label label-info">Semakan</span></td>
+                                            <td>Amirul</td>
+                                        </tr>
+                                        <tr>
+                                            <td>15.04.2026</td>
+                                            <td>Petak Kajian</td>
+                                            <td>Fraser's Hill, Pahang</td>
+                                            <td><span class="label label-primary">Lulus</span></td>
+                                            <td>Unit Kajian</td>
+                                        </tr>
+                                        <tr>
+                                            <td>15.04.2026</td>
+                                            <td>Penerbitan</td>
+                                            <td>Royal Belum, Perak</td>
+                                            <td><span class="label label-warning">Pending</span></td>
+                                            <td>Noraini</td>
+                                        </tr>
+                                        <tr>
+                                            <td>14.04.2026</td>
+                                            <td>Persampelan</td>
+                                            <td>Gunung Stong, Kelantan</td>
+                                            <td><span class="label label-primary">Lulus</span></td>
+                                            <td>JPN Kelantan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Ringkasan Sistem</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p>
+                                    Sistem Kepelbagaian Biologi Hutan merupakan platform bersepadu bagi pengurusan data biodiversiti hutan di Semenanjung Malaysia yang menyokong rekod ekspedisi, persampelan, petak kajian, penerbitan, visualisasi GIS dan pelaporan analitik.
+                                </p>
+                                <hr>
+                                <p><strong>Negeri paling aktif:</strong> Pahang</p>
+                                <p><strong>Modul paling banyak rekod:</strong> Persampelan</p>
+                                <p><strong>Status kritikal:</strong> 17 rekod menunggu pengesahan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Sistem Biodiversiti Hutan JPSM
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Leaflet map
+            var map = L.map('map').setView([4.3, 102.0], 7);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Ekspedisi
+            L.circleMarker([4.3814, 102.4019], {
+                radius: 8,
+                color: '#1c84c6',
+                fillColor: '#1c84c6',
+                fillOpacity: 0.8
+            }).addTo(map).bindPopup('<strong>Ekspedisi:</strong> Taman Negara, Pahang');
+
+            // Persampelan
+            L.circleMarker([2.4945, 103.2544], {
+                radius: 8,
+                color: '#f8ac59',
+                fillColor: '#f8ac59',
+                fillOpacity: 0.8
+            }).addTo(map).bindPopup('<strong>Persampelan:</strong> Endau-Rompin, Johor');
+
+            // Petak Kajian
+            L.circleMarker([3.7150, 101.7367], {
+                radius: 8,
+                color: '#1ab394',
+                fillColor: '#1ab394',
+                fillOpacity: 0.8
+            }).addTo(map).bindPopup('<strong>Petak Kajian:</strong> Frasers Hill, Pahang');
+
+            // Chart
+            const ctx = document.getElementById('biodiversityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025', '2026'],
+                    datasets: [{
+                        label: 'Bilangan Rekod Biodiversiti',
+                        data: [120, 180, 250, 310, 420, 510],
+                        backgroundColor: '#1ab394'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

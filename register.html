@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg"> 
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div> 
+                <h1 class="logo-name"><img src="img/Perhutanan_logo.png" width="100px" height="100px" /></h1> 
+            </div>
+            <h3>Permohonan Pendaftaran</h3>  
+			 
+          <form class="m-t" role="form" action="login.html">
+
+    <!-- Maklumat Peribadi -->
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Nama Penuh" required>
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="No. Kad Pengenalan" required>
+    </div>
+
+    <div class="form-group">
+        <input type="email" class="form-control" placeholder="Emel" required>
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="No. Telefon">
+    </div>
+
+    <!-- Maklumat Akaun -->
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" required>
+    </div>
+
+    <div class="form-group">
+        <input type="password" class="form-control" id="password" placeholder="Kata Laluan" required>
+    </div>
+
+    <div class="form-group">
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Sahkan Kata Laluan" required>
+    </div>
+
+    <!-- Organisasi -->
+    <div class="form-group">
+        <select class="select2_demo_3 form-control">
+            <option>Jabatan Perhutanan Semenanjung Malaysia</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="select2_demo_3 form-control">
+            <option>Bahagian Biodiversiti</option>
+            <option>Bahagian Pengurusan Hutan</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select class="select2_demo_3 form-control">
+            <option>Pahang</option>
+            <option>Perak</option>
+            <option>Johor</option>
+            <option>Kelantan</option>
+            <option>Terengganu</option>
+        </select>
+    </div>
+
+    <!-- Role -->
+    <div class="form-group">
+        <select class="form-control">
+		<option>Admin</option>
+	<option>Pentadbir Bahagian</option>
+	<option>Penyelidik</option>
+	<option>Pengesah</option>  
+        </select>
+    </div>
+
+    
+
+    <!-- Terms -->
+    <div class="form-group">
+        <div class="checkbox i-checks">
+            <label>
+                <input type="checkbox" required>
+                <i></i> Saya bersetuju dengan terma dan polisi
+            </label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary block full-width m-b" onclick="return validateForm()">
+        Daftar Permohonan
+    </button>
+
+    <p class="text-muted text-center">
+        <small>Sudah mempunyai akaun?</small>
+    </p>
+
+    <a class="btn btn-sm btn-white btn-block" href="login.html">Login</a>
+
+</form>
+            <p class="m-t"> <small>@2025</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+
+</html>
