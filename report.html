@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASHBOARD ANALYTICS BIODIVERSITI - JPSM</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        #analyticsMap {
+            height: 420px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e7eaec;
+        }
+
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-icon {
+            font-size: 30px;
+            opacity: 0.20;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .section-note {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 6px;
+            border-radius: 50%;
+        }
+
+        .map-legend {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .status-approved {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .status-review {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .quick-stat {
+            margin-bottom: 12px;
+        }
+
+            .quick-stat strong {
+                display: block;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .quick-stat small {
+                color: #888;
+            }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li><a href="spesies.html">Rekod Spesies</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse in">
+                            <li class="active"><a href="analytics_biodiversiti.html">Dashboard Analitik</a></li>
+                            <li><a href="#">Statistik Negeri</a></li> 
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label">Penerbitan</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="#">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian analitik biodiversiti..." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Dashboard Analytics Biodiversiti</span>
+                        </li>
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- PAGE HEADER -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h2 class="font-bold">Dashboard Analytics Biodiversiti</h2>
+                                <p class="section-note">
+                                    Paparan analitik bersepadu bagi pemantauan data biodiversiti hutan berdasarkan rekod ekspedisi, persampelan, petak kajian, spesies, status semakan dan visualisasi GIS.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Jumlah Rekod Biodiversiti</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Semua modul</div>
+                                <div class="mini-stat-value">2,346</div>
+                                <small>Rekod biodiversiti berdaftar</small>
+                                <i class="fa fa-database kpi-icon text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Spesies Flora</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Rekod aktif</div>
+                                <div class="mini-stat-value">1,280</div>
+                                <small>Spesies flora direkodkan</small>
+                                <i class="fa fa-leaf kpi-icon text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Spesies Fauna</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Rekod aktif</div>
+                                <div class="mini-stat-value">1,066</div>
+                                <small>Spesies fauna direkodkan</small>
+                                <i class="fa fa-paw kpi-icon text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="ibox ibox-kpi">
+                            <div class="ibox-title"><h5>Menunggu Pengesahan</h5></div>
+                            <div class="ibox-content">
+                                <div class="mini-stat-label">Data belum lengkap</div>
+                                <div class="mini-stat-value">23</div>
+                                <small>Perlu semakan pengguna pengesah</small>
+                                <i class="fa fa-check-square-o kpi-icon text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAP + SUMMARY -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Peta Taburan Biodiversiti Semenanjung Malaysia</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row m-b-sm">
+                                    <div class="col-md-3">
+                                        <select class="form-control">
+                                            <option>Semua Negeri</option>
+                                            <option>Pahang</option>
+                                            <option>Perak</option>
+                                            <option>Johor</option>
+                                            <option>Kelantan</option>
+                                            <option>Terengganu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control">
+                                            <option>Semua Layer</option>
+                                            <option>Ekspedisi</option>
+                                            <option>Persampelan</option>
+                                            <option>Petak Kajian</option>
+                                            <option>Spesies Flora</option>
+                                            <option>Spesies Fauna</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control">
+                                            <option>Semua Status</option>
+                                            <option>Pending</option>
+                                            <option>Semakan</option>
+                                            <option>Lulus</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary btn-block">Tapis Peta</button>
+                                    </div>
+                                </div>
+
+                                <div id="analyticsMap"></div>
+
+                                <div class="map-legend">
+                                    <span class="legend-box" style="background:#1c84c6;"></span> Ekspedisi
+                                    &nbsp;&nbsp;
+                                    <span class="legend-box" style="background:#f8ac59;"></span> Persampelan
+                                    &nbsp;&nbsp;
+                                    <span class="legend-box" style="background:#1ab394;"></span> Petak Kajian
+                                    &nbsp;&nbsp;
+                                    <span class="legend-box" style="background:#ed5565;"></span> Fauna
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Rumusan Analitik</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="quick-stat">
+                                    <strong>Pahang</strong>
+                                    <small>Negeri paling aktif dari segi rekod biodiversiti</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>Persampelan</strong>
+                                    <small>Modul dengan pertambahan rekod tertinggi</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>17</strong>
+                                    <small>Petak kajian aktif yang dikemas kini pada 2026</small>
+                                </div>
+                                <div class="quick-stat">
+                                    <strong>6</strong>
+                                    <small>Spesies berstatus kritikal / endangered</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Status Semakan Data</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <p><strong>Ekspedisi</strong> <span class="status-pill status-pending float-right">5 Pending</span></p>
+                                <hr>
+                                <p><strong>Persampelan</strong> <span class="status-pill status-review float-right">9 Semakan</span></p>
+                                <hr>
+                                <p><strong>Petak Kajian</strong> <span class="status-pill status-approved float-right">6 Lulus</span></p>
+                                <hr>
+                                <p><strong>Rekod Spesies</strong> <span class="status-pill status-pending float-right">3 Pending</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Trend Rekod Biodiversiti Mengikut Tahun</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="trendChart" height="120"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Perbandingan Flora dan Fauna Mengikut Negeri</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="comparisonChart" height="120"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECONDARY CHARTS -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Pecahan Rekod Mengikut Modul</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="moduleChart" height="180"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Status Konservasi Spesies</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="iucnChart" height="180"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Aktiviti Terkini</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <ul class="stat-list">
+                                    <li>
+                                        <h2 class="no-margins">12</h2>
+                                        <small>Rekod baharu minggu ini</small>
+                                        <div class="stat-percent">+18% <i class="fa fa-level-up text-navy"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 65%;" class="progress-bar"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2 class="no-margins">5</h2>
+                                        <small>Penerbitan dimuat naik</small>
+                                        <div class="stat-percent">+10% <i class="fa fa-level-up text-navy"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 40%;" class="progress-bar"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h2 class="no-margins">23</h2>
+                                        <small>Data menunggu pengesahan</small>
+                                        <div class="stat-percent">-6% <i class="fa fa-level-down text-warning"></i></div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 25%;" class="progress-bar progress-bar-warning"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Top Rekod / Kawasan Berkepentingan</h5>
+                            </div>
+                            <div class="ibox-content table-responsive">
+                                <table class="table table-hover no-margins">
+                                    <thead>
+                                        <tr>
+                                            <th>Bil.</th>
+                                            <th>Negeri</th>
+                                            <th>Modul</th>
+                                            <th>Bil. Rekod</th>
+                                            <th>Spesies Kritikal</th>
+                                            <th>Status Semasa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Pahang</td>
+                                            <td>Petak Kajian / Persampelan</td>
+                                            <td>532</td>
+                                            <td>4</td>
+                                            <td><span class="label label-primary">Aktif</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Perak</td>
+                                            <td>Ekspedisi / Spesies</td>
+                                            <td>421</td>
+                                            <td>2</td>
+                                            <td><span class="label label-success">Terkini</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Johor</td>
+                                            <td>Persampelan</td>
+                                            <td>316</td>
+                                            <td>1</td>
+                                            <td><span class="label label-warning">Semakan</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Kelantan</td>
+                                            <td>Petak Kajian</td>
+                                            <td>228</td>
+                                            <td>3</td>
+                                            <td><span class="label label-info">Pemantauan</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Dashboard Analytics Biodiversiti JPSM
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    $(document).ready(function () {
+
+        // MAP
+        var map = L.map('analyticsMap').setView([4.3, 102.0], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.circleMarker([4.3814, 102.4019], {
+            radius: 8,
+            color: '#1c84c6',
+            fillColor: '#1c84c6',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Ekspedisi:</strong> Taman Negara, Pahang');
+
+        L.circleMarker([2.4945, 103.2544], {
+            radius: 8,
+            color: '#f8ac59',
+            fillColor: '#f8ac59',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Persampelan:</strong> Endau-Rompin, Johor');
+
+        L.circleMarker([3.7150, 101.7367], {
+            radius: 8,
+            color: '#1ab394',
+            fillColor: '#1ab394',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Petak Kajian:</strong> Frasers Hill, Pahang');
+
+        L.circleMarker([5.6230, 101.3430], {
+            radius: 8,
+            color: '#ed5565',
+            fillColor: '#ed5565',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Fauna:</strong> Rekod Enggang, Royal Belum');
+
+        // CHART 1 - TREND
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: ['2021', '2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: 'Bilangan Rekod',
+                    data: [320, 480, 720, 1100, 1680, 2346],
+                    borderColor: '#1ab394',
+                    backgroundColor: 'rgba(26,179,148,0.15)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // CHART 2 - FLORA VS FAUNA
+        new Chart(document.getElementById('comparisonChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Pahang', 'Perak', 'Johor', 'Kelantan', 'Terengganu'],
+                datasets: [
+                    {
+                        label: 'Flora',
+                        data: [340, 250, 180, 210, 140],
+                        backgroundColor: '#1ab394'
+                    },
+                    {
+                        label: 'Fauna',
+                        data: [220, 170, 140, 160, 120],
+                        backgroundColor: '#1c84c6'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // CHART 3 - MODULE BREAKDOWN
+        new Chart(document.getElementById('moduleChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Ekspedisi', 'Persampelan', 'Petak Kajian', 'Spesies', 'Penerbitan'],
+                datasets: [{
+                    data: [18, 28, 22, 24, 8],
+                    backgroundColor: ['#1c84c6', '#f8ac59', '#1ab394', '#ed5565', '#23c6c8']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // CHART 4 - IUCN
+        new Chart(document.getElementById('iucnChart'), {
+            type: 'pie',
+            data: {
+                labels: ['CR', 'EN', 'VU', 'LC'],
+                datasets: [{
+                    data: [3, 8, 24, 61],
+                    backgroundColor: ['#d9534f', '#f0ad4e', '#ffd500', '#5cb85c']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+    });
+    </script>
+
+</body>
+</html>
