@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPORAN PETAK KAJIAN TUMBESARAN - JPSM</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        #analyticsMap {
+            height: 420px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e7eaec;
+        }
+
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-icon {
+            font-size: 30px;
+            opacity: 0.20;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .section-note {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 6px;
+            border-radius: 50%;
+        }
+
+        .map-legend {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .status-approved {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .status-review {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .quick-stat {
+            margin-bottom: 12px;
+        }
+
+            .quick-stat strong {
+                display: block;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .quick-stat small {
+                color: #888;
+            }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li><a href="spesies.html">Rekod Spesies</a></li>
+                        </ul>
+                    </li> 
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse in">
+                            <li><a href="analytics_biodiversiti.html">Dashboard Analitik</a></li>
+                            <li class="active"><a href="report_demo.html">Statistik Negeri</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label">Penerbitan</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="upload.html">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian lokasi petak, daerah, sistem pengurusan..." class="form-control" id="topSearch">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Laporan Maklumat Kawasan Petak Kajian Tumbesaran</span>
+                        </li>
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- PAGE TITLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h2 class="font-bold">Laporan Maklumat Kawasan Petak Kajian Tumbesaran</h2>
+                                        <p class="section-note">
+                                            Paparan laporan kawasan petak kajian tumbesaran mengikut lokasi, tahun pengusahasilan, tahun penubuhan, status asal hutan, sistem pengurusan, tempoh pengusahasilan dan kelas umur dirian.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 text-right action-btn-group">
+                                        <button class="btn btn-white" onclick="window.print()">
+                                            <i class="fa fa-print"></i> Cetak
+                                        </button>
+                                        <button class="btn btn-success" id="btnExportExcel">
+                                            <i class="fa fa-file-excel-o"></i> Export Excel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+
+                <!-- FILTER -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Penapis Laporan</h5>
+                            </div>
+                            <div class="ibox-content filter-box">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Negeri</label>
+                                            <select class="form-control" id="filterNegeri">
+                                                <option value="">Semua</option>
+                                                <option selected>Perak</option>
+                                                <option>Pahang</option>
+                                                <option>Johor</option>
+                                                <option>Kelantan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Daerah</label>
+                                            <select class="form-control" id="filterDaerah">
+                                                <option value="">Semua</option>
+                                                <option selected>Hulu Perak</option>
+                                                <option>Perak Selatan</option>
+                                                <option>Larut & Matang</option>
+                                                <option>Kuala Kangsar</option>
+                                                <option>Kinta / Manjung</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Status Asal Hutan</label>
+                                            <select class="form-control" id="filterStatusHutan">
+                                                <option value="">Semua</option>
+                                                <option>Baik</option>
+                                                <option>Sederhana</option>
+                                                <option>Miskin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Sistem Pengurusan</label>
+                                            <select class="form-control" id="filterSistem">
+                                                <option value="">Semua</option>
+                                                <option>MUS</option>
+                                                <option>SMS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Kelas Umur Dirian</label>
+                                            <select class="form-control" id="filterKelasUmur">
+                                                <option value="">Semua</option>
+                                                <option>A</option>
+                                                <option>B</option>
+                                                <option>C</option>
+                                                <option>D</option>
+                                                <option>E</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Tahun Penubuhan</label>
+                                            <select class="form-control" id="filterTahunPenubuhan">
+                                                <option value="">Semua</option>
+                                                <option>1992</option>
+                                                <option>1993</option>
+                                                <option>1994</option>
+                                                <option>1995</option>
+                                                <option>1996</option>
+                                                <option>1997</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button class="btn btn-primary" id="btnApplyFilter">
+                                        <i class="fa fa-filter"></i> Tapis
+                                    </button>
+                                    <button class="btn btn-white" id="btnResetFilter">
+                                        <i class="fa fa-refresh"></i> Set Semula
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REPORT TABLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+
+                                <div class="report-title-box">
+                                    <h3>Laporan petak kajian mengikut lokasi dan kategori pengurusan</h3> 
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover" id="tumbesaranTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Lokasi Petak Kajian</th>
+                                                <th>Tahun Pengusahasilan</th>
+                                                <th>Tahun Penubuhan</th>
+                                                <th>Status Asal Hutan</th>
+                                                <th>Sistem Pengurusan</th>
+                                                <th>Tempoh Pengusahasilan (tahun)</th>
+                                                <th>Kelas Umur Dirian</th>
+                                                <th>Negeri</th>
+                                                <th>Daerah</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="group-row">
+                                                <td colspan="9">Perak - Hulu Perak</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Papulut, Kpt. 43</td>
+                                                <td>1991</td>
+                                                <td>1993</td>
+                                                <td>Sederhana</td>
+                                                <td>SMS</td>
+                                                <td>30</td>
+                                                <td>A</td>
+                                                <td>Perak</td>
+                                                <td>Hulu Perak</td>
+                                            </tr>
+
+                                            <tr class="group-row">
+                                                <td colspan="9">Perak - Perak Selatan</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Chikus, Kpt. 51</td>
+                                                <td>1962</td>
+                                                <td>1992</td>
+                                                <td>Baik</td>
+                                                <td>MUS</td>
+                                                <td>59</td>
+                                                <td>D</td>
+                                                <td>Perak</td>
+                                                <td>Perak Selatan</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bt. Slim, Kpt. 32 A</td>
+                                                <td>1985</td>
+                                                <td>1994</td>
+                                                <td>Sederhana</td>
+                                                <td>SMS</td>
+                                                <td>36</td>
+                                                <td>B</td>
+                                                <td>Perak</td>
+                                                <td>Perak Selatan</td>
+                                            </tr>
+
+                                            <tr class="group-row">
+                                                <td colspan="9">Perak - Larut & Matang</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Pondok Tanjung Kpt.11E</td>
+                                                <td>1938</td>
+                                                <td>1992</td>
+                                                <td>Baik</td>
+                                                <td>MUS</td>
+                                                <td>83</td>
+                                                <td>E</td>
+                                                <td>Perak</td>
+                                                <td>Larut & Matang</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bintang Hijau Kpt. 276</td>
+                                                <td>1976</td>
+                                                <td>1996</td>
+                                                <td>Baik</td>
+                                                <td>MUS</td>
+                                                <td>45</td>
+                                                <td>C</td>
+                                                <td>Perak</td>
+                                                <td>Larut & Matang</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bintang Hijau Kpt. 235</td>
+                                                <td>1987</td>
+                                                <td>1997</td>
+                                                <td>Miskin</td>
+                                                <td>SMS</td>
+                                                <td>34</td>
+                                                <td>B</td>
+                                                <td>Perak</td>
+                                                <td>Larut & Matang</td>
+                                            </tr>
+
+                                            <tr class="group-row">
+                                                <td colspan="9">Perak - Kuala Kangsar</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bubuk, Kpt. 396</td>
+                                                <td>1955</td>
+                                                <td>1992</td>
+                                                <td>Sederhana</td>
+                                                <td>MUS</td>
+                                                <td>66</td>
+                                                <td>E</td>
+                                                <td>Perak</td>
+                                                <td>Kuala Kangsar</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Guong Korbu, Kpt. 38</td>
+                                                <td>1994</td>
+                                                <td>1995</td>
+                                                <td>Baik</td>
+                                                <td>SMS</td>
+                                                <td>27</td>
+                                                <td>A</td>
+                                                <td>Perak</td>
+                                                <td>Kuala Kangsar</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bintang Hijau, Kpt. 208</td>
+                                                <td>1969</td>
+                                                <td>1997</td>
+                                                <td>Miskin</td>
+                                                <td>MUS</td>
+                                                <td>52</td>
+                                                <td>D</td>
+                                                <td>Perak</td>
+                                                <td>Kuala Kangsar</td>
+                                            </tr>
+
+                                            <tr class="group-row">
+                                                <td colspan="9">Perak - Kinta / Manjung</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Ulu Bruas, Kpt. 63</td>
+                                                <td>1974</td>
+                                                <td>1992</td>
+                                                <td>Miskin</td>
+                                                <td>MUS</td>
+                                                <td>47</td>
+                                                <td>C</td>
+                                                <td>Perak</td>
+                                                <td>Kinta / Manjung</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Bubuk, Kpt. 57</td>
+                                                <td>1971</td>
+                                                <td>1996</td>
+                                                <td>Miskin</td>
+                                                <td>MUS</td>
+                                                <td>50</td>
+                                                <td>C</td>
+                                                <td>Perak</td>
+                                                <td>Kinta / Manjung</td>
+                                            </tr>
+                                            <tr>
+                                                <td>H.S. Keteng Sariong, Kpt. 48</td>
+                                                <td>1971</td>
+                                                <td>1997</td>
+                                                <td>Sederhana</td>
+                                                <td>MUS</td>
+                                                <td>50</td>
+                                                <td>C</td>
+                                                <td>Perak</td>
+                                                <td>Kinta / Manjung</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Laporan Tumbesaran JPSM
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    $(document).ready(function () {
+
+        // MAP
+        var map = L.map('analyticsMap').setView([4.3, 102.0], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.circleMarker([4.3814, 102.4019], {
+            radius: 8,
+            color: '#1c84c6',
+            fillColor: '#1c84c6',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Ekspedisi:</strong> Taman Negara, Pahang');
+
+        L.circleMarker([2.4945, 103.2544], {
+            radius: 8,
+            color: '#f8ac59',
+            fillColor: '#f8ac59',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Persampelan:</strong> Endau-Rompin, Johor');
+
+        L.circleMarker([3.7150, 101.7367], {
+            radius: 8,
+            color: '#1ab394',
+            fillColor: '#1ab394',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Petak Kajian:</strong> Frasers Hill, Pahang');
+
+        L.circleMarker([5.6230, 101.3430], {
+            radius: 8,
+            color: '#ed5565',
+            fillColor: '#ed5565',
+            fillOpacity: 0.85
+        }).addTo(map).bindPopup('<strong>Fauna:</strong> Rekod Enggang, Royal Belum');
+
+        // CHART 1 - TREND
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: ['2021', '2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: 'Bilangan Rekod',
+                    data: [320, 480, 720, 1100, 1680, 2346],
+                    borderColor: '#1ab394',
+                    backgroundColor: 'rgba(26,179,148,0.15)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // CHART 2 - FLORA VS FAUNA
+        new Chart(document.getElementById('comparisonChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Pahang', 'Perak', 'Johor', 'Kelantan', 'Terengganu'],
+                datasets: [
+                    {
+                        label: 'Flora',
+                        data: [340, 250, 180, 210, 140],
+                        backgroundColor: '#1ab394'
+                    },
+                    {
+                        label: 'Fauna',
+                        data: [220, 170, 140, 160, 120],
+                        backgroundColor: '#1c84c6'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // CHART 3 - MODULE BREAKDOWN
+        new Chart(document.getElementById('moduleChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Ekspedisi', 'Persampelan', 'Petak Kajian', 'Spesies', 'Penerbitan'],
+                datasets: [{
+                    data: [18, 28, 22, 24, 8],
+                    backgroundColor: ['#1c84c6', '#f8ac59', '#1ab394', '#ed5565', '#23c6c8']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // CHART 4 - IUCN
+        new Chart(document.getElementById('iucnChart'), {
+            type: 'pie',
+            data: {
+                labels: ['CR', 'EN', 'VU', 'LC'],
+                datasets: [{
+                    data: [3, 8, 24, 61],
+                    backgroundColor: ['#d9534f', '#f0ad4e', '#ffd500', '#5cb85c']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+    });
+    </script>
+
+</body>
+</html>
