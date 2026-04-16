@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN - SENARAI PENERBITAN</title>
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN - MODUL PETAK KAJIAN</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -44,74 +44,55 @@
             margin-top: 5px;
         }
 
-        .cover-box {
-            height: 180px;
-            border: 1px solid #e7eaec;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #1ab394, #1c84c6);
-            color: #fff;
-            padding: 18px;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .cover-box h4 {
-                color: #fff;
-                font-weight: 700;
-            }
-
-            .cover-box .year-tag {
-                position: absolute;
-                right: 15px;
-                top: 15px;
-                background: rgba(255,255,255,0.18);
-                padding: 4px 10px;
-                border-radius: 20px;
-                font-size: 11px;
-                font-weight: 600;
-            }
-
-            .cover-box .bottom-meta {
-                position: absolute;
-                left: 18px;
-                bottom: 18px;
-                font-size: 12px;
-                opacity: 0.95;
-            }
-
         .action-btn-group .btn {
             margin-right: 5px;
             margin-bottom: 5px;
         }
 
-        .filter-box .form-group {
-            margin-bottom: 10px;
-        }
-
-        .badge-soft {
+        .status-pill {
+            display: inline-block;
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 600;
         }
 
-        .badge-book {
-            background: #d9edf7;
-            color: #31708f;
-        }
-
-        .badge-prosiding {
+        .status-active {
             background: #dff0d8;
             color: #3c763d;
         }
 
-        .badge-kertas {
+        .status-review {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .status-pending {
             background: #fceec1;
             color: #8a6d3b;
         }
 
-        .quick-stat {
+        .status-closed {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 10px;
+        }
+
+        .quick-stat {
+            margin-bottom: 12px;
         }
 
             .quick-stat strong {
@@ -124,9 +105,48 @@
                 color: #888;
             }
 
-        .publication-meta {
+        .badge-soft {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-hcva {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .badge-vjr {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .badge-arb {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .badge-eco {
+            background: #f2dede;
+            color: #a94442;
+        }
+
+        .filter-box .form-group {
+            margin-bottom: 12px;
+        }
+
+        .table-meta {
             font-size: 12px;
             color: #777;
+        }
+
+        .highlight-box {
+            border-left: 4px solid #1ab394;
+            background: #f8fbfb;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -164,18 +184,18 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li class="active">
                         <a href="#">
                             <i class="fa fa-tree"></i>
                             <span class="nav-label">Biodiversiti</span>
                             <span class="fa arrow"></span>
                         </a>
-                        <ul class="nav nav-second-level collapse">
+                        <ul class="nav nav-second-level collapse in">
                             <li><a href="ekspedisi.html">Ekspedisi</a></li>
                             <li><a href="persampelan.html">Persampelan</a></li>
-                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li class="active"><a href="petak.html">Petak Kajian</a></li>
                             <li><a href="recordFF.html">Rekod Spesies</a></li>
-                           
+                       
                         </ul>
                     </li>
 
@@ -207,15 +227,15 @@
                         </ul>
                     </li>
 
-                    <li class="active">
+                    <li>
                         <a href="#">
                             <i class="fa fa-book"></i>
-                            <span class="nav-label"><a href="Penerbitan.html">Peta Interaktif</a></span>
+                            <span class="nav-label">Penerbitan</span>
                             <span class="fa arrow"></span>
                         </a>
-                        <ul class="nav nav-second-level collapse in">
-                            <li class="active"><a href="penerbitan.html">Senarai Penerbitan</a></li>
-                            <li><a href="upload.html">Upload Prosiding</a></li>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="#">Upload Prosiding</a></li>
                         </ul>
                     </li>
 
@@ -250,7 +270,7 @@
                         </a>
                         <form role="search" class="navbar-form-custom" action="#">
                             <div class="form-group">
-                                <input type="text" placeholder="Carian tajuk, penulis, tahun, kata kunci..." class="form-control">
+                                <input type="text" placeholder="Carian petak, negeri, jenis kajian, status spesies..." class="form-control">
                             </div>
                         </form>
                     </div>
@@ -260,7 +280,7 @@
                             <span class="m-r-sm text-muted welcome-message">Selamat Datang, Amirul</span>
                         </li>
                         <li>
-                            <a href="index.html">
+                            <a href="login.html">
                                 <i class="fa fa-sign-out"></i> Log out
                             </a>
                         </li>
@@ -278,116 +298,85 @@
                             <div class="ibox-content">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h2 class="font-bold">Senarai Penerbitan</h2>
+                                        <h2 class="font-bold">Modul Petak Kajian</h2>
                                         <p class="section-note">
-                                            Pengurusan buku prosiding, kertas kerja dan penerbitan berkaitan ekspedisi saintifik, persampelan serta petak kajian biodiversiti hutan.
+                                            Pengurusan petak kajian biodiversiti yang meliputi HCVA, VJR, Arboretum dan Ekologi termasuk data asas petak, taburan pokok, status spesies, bancian, koordinat dan pelan kawasan.
                                         </p>
                                     </div>
                                     <div class="col-md-4 text-right action-btn-group">
-                                        <button class="btn btn-default"><i class="fa fa-upload"></i> Muat Naik Prosiding</button>
-                                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Penerbitan</button>
+                                        <button class="btn btn-default"><i class="fa fa-download"></i> Export Senarai</button>
+                                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Petak Kajian</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- KPI -->
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="ibox ibox-kpi">
-                            <div class="ibox-title"><h5>Jumlah Penerbitan</h5></div>
+                            <div class="ibox-title"><h5>Jumlah Petak Kajian</h5></div>
                             <div class="ibox-content">
-                                <div class="mini-stat-label">Semua rekod</div>
-                                <div class="mini-stat-value">54</div>
-                                <small>Buku dan prosiding</small>
-                                <i class="fa fa-book kpi-icon text-success"></i>
+                                <div class="mini-stat-label">Semua jenis petak</div>
+                                <div class="mini-stat-value">181</div>
+                                <small>Direkodkan dalam sistem</small>
+                                <i class="fa fa-map-o kpi-icon text-success"></i>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3">
                         <div class="ibox ibox-kpi">
-                            <div class="ibox-title"><h5>Kertas Kerja</h5></div>
+                            <div class="ibox-title"><h5>Petak Aktif</h5></div>
                             <div class="ibox-content">
-                                <div class="mini-stat-label">Rekod dimuat naik</div>
-                                <div class="mini-stat-value">128</div>
-                                <small>Artikel / kertas kerja</small>
-                                <i class="fa fa-file-text-o kpi-icon text-info"></i>
+                                <div class="mini-stat-label">Sedang dipantau</div>
+                                <div class="mini-stat-value">132</div>
+                                <small>Petak aktif dan beroperasi</small>
+                                <i class="fa fa-check-square-o kpi-icon text-info"></i>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3">
                         <div class="ibox ibox-kpi">
-                            <div class="ibox-title"><h5>Tahun Terkini</h5></div>
+                            <div class="ibox-title"><h5>Rekod Bancian</h5></div>
                             <div class="ibox-content">
-                                <div class="mini-stat-label">Penerbitan aktif</div>
-                                <div class="mini-stat-value">2026</div>
-                                <small>Kemas kini semasa</small>
-                                <i class="fa fa-calendar kpi-icon text-primary"></i>
+                                <div class="mini-stat-label">Kemas kini terkini</div>
+                                <div class="mini-stat-value">564</div>
+                                <small>Data bancian dan pemantauan</small>
+                                <i class="fa fa-bar-chart kpi-icon text-primary"></i>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-3">
                         <div class="ibox ibox-kpi">
-                            <div class="ibox-title"><h5>Perlu Semakan</h5></div>
+                            <div class="ibox-title"><h5>Perlu Tindakan</h5></div>
                             <div class="ibox-content">
-                                <div class="mini-stat-label">Menunggu pengesahan</div>
-                                <div class="mini-stat-value">6</div>
-                                <small>Prosiding / artikel baharu</small>
-                                <i class="fa fa-check-square-o kpi-icon text-danger"></i>
+                                <div class="mini-stat-label">Semakan / kemas kini</div>
+                                <div class="mini-stat-value">11</div>
+                                <small>Petak menunggu kemas kini</small>
+                                <i class="fa fa-exclamation-circle kpi-icon text-danger"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- FILTER + FEATURED -->
+                <!-- FILTER + SUMMARY -->
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="ibox">
                             <div class="ibox-title">
-                                <h5>Carian & Penapis</h5>
+                                <h5>Penapis Carian</h5>
                             </div>
                             <div class="ibox-content filter-box">
-                                <div class="form-group">
-                                    <label>Tajuk / Kata Kunci</label>
-                                    <input type="text" class="form-control" placeholder="Contoh: Endau-Rompin, flora, prosiding">
-                                </div>
-                                <div class="form-group">
-                                    <label>Jenis Penerbitan</label>
-                                    <select class="form-control">
-                                        <option>Semua</option>
-                                        <option>Prosiding</option>
-                                        <option>Kertas Kerja</option>
-                                        <option>Buku</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Tahun</label>
-                                    <select class="form-control">
-                                        <option>Semua</option>
-                                        <option>2026</option>
-                                        <option>2025</option>
-                                        <option>2024</option>
-                                        <option>2023</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Modul Berkaitan</label>
-                                    <select class="form-control">
-                                        <option>Semua</option>
-                                        <option>Ekspedisi</option>
-                                        <option>Persampelan</option>
-                                        <option>Petak Kajian</option>
-                                    </select>
-                                </div>
                                 <div class="form-group">
                                     <label>Negeri</label>
                                     <select class="form-control">
                                         <option>Semua Negeri</option>
-                                        <option>Pahang</option>
+                                        <option selected>Pahang</option>
                                         <option>Perak</option>
                                         <option>Johor</option>
                                         <option>Kelantan</option>
@@ -395,145 +384,234 @@
                                     </select>
                                 </div>
 
-                                <button class="btn btn-primary btn-block">Tapis Rekod</button>
+                                <div class="form-group">
+                                    <label>Jenis Kajian</label>
+                                    <select class="form-control">
+                                        <option>Semua Jenis</option>
+                                        <option>HCVA</option>
+                                        <option selected>VJR</option>
+                                        <option>Arboretum</option>
+                                        <option>Ekologi</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Status Petak</label>
+                                    <select class="form-control">
+                                        <option>Semua Status</option>
+                                        <option selected>Aktif</option>
+                                        <option>Dalam Semakan</option>
+                                        <option>Tidak Aktif</option>
+                                        <option>Ditutup</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tahun Bancian</label>
+                                    <select class="form-control">
+                                        <option>Semua</option>
+                                        <option>2026</option>
+                                        <option selected>2025</option>
+                                        <option>2024</option>
+                                        <option>2023</option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn-primary btn-block">Tapis Senarai</button>
                                 <button class="btn btn-white btn-block">Set Semula</button>
                             </div>
                         </div>
 
                         <div class="ibox">
                             <div class="ibox-title">
-                                <h5>Ringkasan Pantas</h5>
+                                <h5>Ringkasan Jenis Petak</h5>
                             </div>
                             <div class="ibox-content">
                                 <div class="quick-stat">
-                                    <strong>12</strong>
-                                    <small>Prosiding ekspedisi saintifik</small>
+                                    <strong>42</strong>
+                                    <small>HCVA</small>
                                 </div>
                                 <div class="quick-stat">
-                                    <strong>8</strong>
-                                    <small>Penerbitan persampelan</small>
+                                    <strong>58</strong>
+                                    <small>VJR</small>
                                 </div>
                                 <div class="quick-stat">
-                                    <strong>6</strong>
-                                    <small>Penerbitan petak kajian</small>
+                                    <strong>23</strong>
+                                    <small>Arboretum</small>
                                 </div>
                                 <div class="quick-stat">
-                                    <strong>Pahang</strong>
-                                    <small>Negeri dengan rekod terbanyak</small>
+                                    <strong>58</strong>
+                                    <small>Ekologi</small>
                                 </div>
                             </div>
                         </div>
+
+                      
                     </div>
 
                     <div class="col-lg-8">
-                        
-
                         <div class="ibox">
                             <div class="ibox-title">
-                                <h5>Senarai Penerbitan</h5>
+                                <h5>Senarai Petak Kajian</h5>
+
                             </div>
                             <div class="ibox-content table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="publicationTable">
+                                <table class="table table-striped table-bordered table-hover" id="plotTable">
                                     <thead>
                                         <tr>
                                             <th>Bil.</th>
-                                            <th>Tajuk Penerbitan</th>
-                                            <th>Jenis</th>
-                                            <th>Modul</th>
-                                            <th>Tahun</th>
-                                            <th>Penulis / Penyusun</th>
-                                            <th>Status</th>
+                                            <th>Kod Petak</th>
+                                            <th>Nama / Lokasi Petak</th>
+                                            <th>Negeri</th>
+                                            <th>Jenis Kajian</th>
+                                            <th>Status Petak</th>
+                                            <th>Tahun Bancian</th>
                                             <th>Tindakan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>1</td>
+                                            <td>VJR/PHG/001</td>
                                             <td>
-                                                Prosiding Biodiversiti Hutan Pahang Tengah
-                                                <div class="publication-meta">ISBN: 978-967-0001-01-2</div>
+                                                VJR Gunung Tapis
+                                                <div class="table-meta">Jerantut, Pahang</div>
                                             </td>
-                                            <td><span class="badge-soft badge-prosiding">Prosiding</span></td>
-                                            <td>Ekspedisi</td>
-                                            <td>2026</td>
-                                            <td>Dr Razlina Raghazli</td>
-                                            <td><span class="label label-primary">Diluluskan</span></td>
+                                            <td>Pahang</td>
+                                            <td><span class="badge-soft badge-vjr">VJR</span></td>
+                                            <td><span class="status-pill status-active">Aktif</span></td>
+                                            <td>2025</td>
                                             <td>
                                                 <button class="btn btn-xs btn-info">Lihat</button>
-                                                <button class="btn btn-xs btn-white">Muat Turun</button>
-                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                                <button class="btn btn-xs btn-white">Edit</button>
+                                                <button class="btn btn-xs btn-white">GIS</button>
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td>2</td>
+                                            <td>HCVA/JHR/004</td>
                                             <td>
-                                                Senarai Kertas Kerja Persampelan Endau-Rompin
-                                                <div class="publication-meta">8 artikel berkaitan flora dan serangga</div>
+                                                HCVA Endau-Rompin
+                                                <div class="table-meta">Johor</div>
                                             </td>
-                                            <td><span class="badge-soft badge-kertas">Kertas Kerja</span></td>
-                                            <td>Persampelan</td>
+                                            <td>Johor</td>
+                                            <td><span class="badge-soft badge-hcva">HCVA</span></td>
+                                            <td><span class="status-pill status-review">Semakan</span></td>
                                             <td>2025</td>
-                                            <td>Unit Biodiversiti JPSM</td>
-                                            <td><span class="label label-warning">Pending</span></td>
                                             <td>
                                                 <button class="btn btn-xs btn-info">Lihat</button>
-                                                <button class="btn btn-xs btn-white">Muat Turun</button>
-                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                                <button class="btn btn-xs btn-white">Edit</button>
+                                                <button class="btn btn-xs btn-white">GIS</button>
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td>3</td>
+                                            <td>ARB/PRK/002</td>
                                             <td>
-                                                Buku Laporan Petak Kajian HCVA Pahang
-                                                <div class="publication-meta">Rujukan pemantauan petak kajian</div>
+                                                Arboretum Royal Belum
+                                                <div class="table-meta">Perak</div>
                                             </td>
-                                            <td><span class="badge-soft badge-book">Buku</span></td>
-                                            <td>Petak Kajian</td>
+                                            <td>Perak</td>
+                                            <td><span class="badge-soft badge-arb">Arboretum</span></td>
+                                            <td><span class="status-pill status-active">Aktif</span></td>
                                             <td>2024</td>
-                                            <td>Bahagian Biodiversiti</td>
-                                            <td><span class="label label-primary">Diluluskan</span></td>
                                             <td>
                                                 <button class="btn btn-xs btn-info">Lihat</button>
-                                                <button class="btn btn-xs btn-white">Muat Turun</button>
-                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                                <button class="btn btn-xs btn-white">Edit</button>
+                                                <button class="btn btn-xs btn-white">GIS</button>
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td>4</td>
+                                            <td>EKO/KTN/006</td>
                                             <td>
-                                                Prosiding Seminar Biodiversiti Hutan Simpan Perak
-                                                <div class="publication-meta">Mengandungi 10 kertas kerja</div>
+                                                Petak Ekologi Gunung Stong
+                                                <div class="table-meta">Kelantan</div>
                                             </td>
-                                            <td><span class="badge-soft badge-prosiding">Prosiding</span></td>
-                                            <td>Ekspedisi</td>
+                                            <td>Kelantan</td>
+                                            <td><span class="badge-soft badge-eco">Ekologi</span></td>
+                                            <td><span class="status-pill status-pending">Perlu Tindakan</span></td>
                                             <td>2023</td>
-                                            <td>JPN Perak</td>
-                                            <td><span class="label label-info">Semakan</span></td>
                                             <td>
                                                 <button class="btn btn-xs btn-info">Lihat</button>
-                                                <button class="btn btn-xs btn-white">Muat Turun</button>
-                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                                <button class="btn btn-xs btn-white">Edit</button>
+                                                <button class="btn btn-xs btn-white">GIS</button>
                                             </td>
                                         </tr>
+
                                         <tr>
                                             <td>5</td>
+                                            <td>VJR/TRG/003</td>
                                             <td>
-                                                Katalog Penemuan Flora Endemik Semenanjung Malaysia
-                                                <div class="publication-meta">Kompilasi rujukan biodiversiti</div>
+                                                VJR Tasik Kenyir
+                                                <div class="table-meta">Terengganu</div>
                                             </td>
-                                            <td><span class="badge-soft badge-book">Buku</span></td>
-                                            <td>Persampelan</td>
+                                            <td>Terengganu</td>
+                                            <td><span class="badge-soft badge-vjr">VJR</span></td>
+                                            <td><span class="status-pill status-closed">Ditutup</span></td>
                                             <td>2022</td>
-                                            <td>Unit Penyelidikan</td>
-                                            <td><span class="label label-primary">Diluluskan</span></td>
                                             <td>
                                                 <button class="btn btn-xs btn-info">Lihat</button>
-                                                <button class="btn btn-xs btn-white">Muat Turun</button>
-                                                <button class="btn btn-xs btn-white">Cetak</button>
+                                                <button class="btn btn-xs btn-white">Edit</button>
+                                                <button class="btn btn-xs btn-white">GIS</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                 
+
+                            </div>
+                        </div>
+
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Maklumat Ringkas Petak Dipilih</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="info-label">Kod Petak</div>
+                                        <div class="info-value">VJR/PHG/001</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="info-label">Jenis Kajian</div>
+                                        <div class="info-value">Virgin Jungle Forest (VJR)</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="info-label">Koordinat</div>
+                                        <div class="info-value">4.2150, 102.1250</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="info-label">Status Spesies</div>
+                                        <div class="info-value">Dikemaskini</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="info-label">Data Taburan Pokok</div>
+                                        <div class="info-value">Lengkap</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-label">Bancian Terkini</div>
+                                        <div class="info-value">Disember 2025</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-label">Poligon Kawasan</div>
+                                        <div class="info-value">Tersedia dalam GIS</div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="text-right">
+                                    <button class="btn btn-default"><i class="fa fa-map-marker"></i> Lihat di GIS</button>
+                                    <button class="btn btn-info"><i class="fa fa-file-text"></i> Lihat Bancian</button>
+                                    <button class="btn btn-primary"><i class="fa fa-pencil"></i> Kemaskini Petak</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -544,7 +622,7 @@
             <!-- FOOTER -->
             <div class="footer">
                 <div class="float-right">
-                    Modul Penerbitan - Sistem Biodiversiti Hutan
+                    Modul Petak Kajian - Sistem Biodiversiti Hutan
                 </div>
                 <div>
                     <strong>Copyright</strong> JPSM &copy; 2026
@@ -564,12 +642,12 @@
     <script src="js/plugins/pace/pace.min.js"></script>
 
     <script>
-    $(document).ready(function () {
-        $('#publicationTable').DataTable({
-            pageLength: 5,
-            responsive: true
+        $(document).ready(function () {
+            $('#plotTable').DataTable({
+                pageLength: 5,
+                responsive: true
+            });
         });
-    });
     </script>
 
 </body>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM KEPELBAGAIAN BIOLOGI HUTAN - MODUL PETAK KAJIAN</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <style>
+        .ibox-kpi {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-icon {
+            font-size: 28px;
+            opacity: 0.22;
+            position: absolute;
+            right: 18px;
+            top: 18px;
+        }
+
+        .mini-stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .mini-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 0 0;
+        }
+
+        .section-note {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .action-btn-group .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .status-review {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .status-pending {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .status-closed {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .quick-stat {
+            margin-bottom: 12px;
+        }
+
+            .quick-stat strong {
+                display: block;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .quick-stat small {
+                color: #888;
+            }
+
+        .badge-soft {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-hcva {
+            background: #d9edf7;
+            color: #31708f;
+        }
+
+        .badge-vjr {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+
+        .badge-arb {
+            background: #fceec1;
+            color: #8a6d3b;
+        }
+
+        .badge-eco {
+            background: #f2dede;
+            color: #a94442;
+        }
+
+        .filter-box .form-group {
+            margin-bottom: 12px;
+        }
+
+        .table-meta {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .highlight-box {
+            border-left: 4px solid #1ab394;
+            background: #f8fbfb;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .iucn-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #fff;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .cr {
+            background: #d9534f;
+        }
+
+        .en {
+            background: #f0ad4e;
+        }
+
+        .vu {
+            background: #ffd500;
+            color: #000;
+        }
+
+        .lc {
+            background: #5cb85c;
+        }
+
+        .modal-xl {
+            width: 90%;
+            max-width: 1200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="rounded-circle" src="img/profile_small.jpg" />
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="block m-t-xs font-bold">Amirul</span>
+                                <span class="text-muted text-xs block">Pentadbir <b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JPSM
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Laman Utama</span>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-tree"></i>
+                            <span class="nav-label">Biodiversiti</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse in">
+                            <li><a href="ekspedisi.html">Ekspedisi</a></li>
+                            <li><a href="persampelan.html">Persampelan</a></li>
+                            <li><a href="petak.html">Petak Kajian</a></li>
+                            <li class="active"><a href="recordFF.html">Rekod Spesies</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-map"></i>
+                            <span class="nav-label">Peta GIS</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="dashboard.html">Peta Interaktif</a></li>
+                            <li><a href="#">Layer Ekspedisi</a></li>
+                            <li><a href="#">Layer Persampelan</a></li>
+                            <li><a href="#">Layer Petak Kajian</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span class="nav-label">Laporan & Analitik</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="laporan.html">Laporan Standard</a></li>
+                            <li><a href="#">Dashboard Analitik</a></li>
+                            <li><a href="#">Statistik Negeri</a></li>
+                            <li><a href="#">Export Data</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label">Penerbitan</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="penerbitan.html">Senarai Penerbitan</a></li>
+                            <li><a href="#">Upload Prosiding</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span class="nav-label">Pentadbiran</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="user.html">Pengurusan Pengguna</a></li>
+                            <li><a href="menu.html">Pengurusan Menu</a></li>
+                            <li><a href="#">Peranan Pengguna</a></li>
+                            <li><a href="#">Audit Log</a></li>
+                            <li><a href="#">Konfigurasi Sistem</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        <!-- PAGE WRAPPER -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- TOP NAV -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="Carian petak, negeri, jenis kajian, status spesies..." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Selamat Datang, Amirul</span>
+                        </li>
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="wrapper wrapper-content">
+
+                <!-- TITLE -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h2 class="font-bold">Rekod Spesies Biodiversiti</h2>
+                                        <p class="section-note">
+                                            Pengurusan rekod spesies flora dan fauna termasuk status konservasi, lokasi penemuan dan kaitan dengan petak kajian.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 text-right action-btn-group">
+                                        <button class="btn btn-default"><i class="fa fa-download"></i> Export Senarai</button>
+                                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Rekod</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- TOGGLE -->
+                <div class="text-center m-b-md toggle-btn">
+                    <button class="btn btn-primary">Flora</button>
+                    <button class="btn btn-white">Fauna</button>
+                </div>
+
+                <!-- FILTER -->
+                <div class="row filter-box">
+                    <div class="col-md-3">
+                        <select class="form-control">
+                            <option>Semua Negeri</option>
+                            <option>Pahang</option>
+                            <option>Perak</option>
+                            <option>Johor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-control">
+                            <option>Semua Status IUCN</option>
+                            <option>CR - Critically Endangered</option>
+                            <option>EN - Endangered</option>
+                            <option>VU - Vulnerable</option>
+                            <option>LC - Least Concern</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select class="form-control">
+                            <option>Semua Habitat</option>
+                            <option>Hutan Dipterokarpa</option>
+                            <option>Hutan Paya</option>
+                            <option>Gunung</option>
+                        </select>
+                    </div>
+
+
+                </div>
+
+                <!-- TABLE -->
+                <div class="ibox">
+                    <div class="ibox-content">
+
+                        <table class="table table-striped table-bordered" id="speciesTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama Tempatan</th>
+                                    <th>Nama Saintifik</th>
+                                    <th>Kategori</th>
+                                    <th>Status IUCN</th>
+                                    <th>Habitat</th>
+                                    <th>Lokasi</th>
+                                    <th>Petak Kajian</th>
+                                    <th>Tindakan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>Meranti</td>
+                                    <td><i>Shorea leprosula</i></td>
+                                    <td>Flora</td>
+                                    <td><span class="badge-iucn iucn-vu">VU</span></td>
+                                    <td>Hutan Dipterokarpa</td>
+                                    <td>Pahang</td>
+                                    <td>VJR Gunung Tapis</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info" onclick="openSpeciesModal('meranti')">Lihat</button>
+                                        <button class="btn btn-xs btn-white">Edit</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Harimau Malaya</td>
+                                    <td><i>Panthera tigris jacksoni</i></td>
+                                    <td>Fauna</td>
+                                    <td><span class="badge-iucn iucn-cr">CR</span></td>
+                                    <td>Hutan Tropika</td>
+                                    <td>Kelantan</td>
+                                    <td>HCVA Gunung Stong</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info" onclick="openSpeciesModal('harimau')">Lihat</button>
+                                        <button class="btn btn-xs btn-white">Edit</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>3</td>
+                                    <td>Enggang</td>
+                                    <td><i>Buceros rhinoceros</i></td>
+                                    <td>Fauna</td>
+                                    <td><span class="badge-iucn iucn-en">EN</span></td>
+                                    <td>Hutan Hujan</td>
+                                    <td>Perak</td>
+                                    <td>Royal Belum</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info" onclick="openSpeciesModal('enggang')">Lihat</button>
+                                        <button class="btn btn-xs btn-white">Edit</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div class="float-right">
+                    Modul Petak Kajian - Sistem Biodiversiti Hutan
+                </div>
+                <div>
+                    <strong>Copyright</strong> JPSM &copy; 2026
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#plotTable').DataTable({
+                pageLength: 5,
+                responsive: true
+            });
+        });
+        function viewSpecies(id) {
+            window.location.href = "spesies_detail.html?id=" + id;
+        }
+    </script>
+    <!-- MODAL DETAIL SPESIES -->
+    <div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="speciesModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="speciesModalLabel">Detail Spesies</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeSpeciesModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <img id="speciesImage" src="" class="img-responsive img-rounded" style="width:100%; max-height:300px; object-fit:cover;">
+                        </div>
+
+                        <div class="col-md-8">
+                            <h3 id="speciesName">Nama Spesies</h3>
+                            <h4><i id="speciesScientific">Nama Saintifik</i></h4>
+
+                            <div class="row m-t-md">
+                                <div class="col-md-6">
+                                    <p><strong>Kategori:</strong> <span id="speciesCategory"></span></p>
+                                    <p><strong>Habitat:</strong> <span id="speciesHabitat"></span></p>
+                                    <p><strong>Negeri:</strong> <span id="speciesState"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Status IUCN:</strong> <span id="speciesIUCN"></span></p>
+                                    <p><strong>Petak Kajian:</strong> <span id="speciesPlot"></span></p>
+                                    <p><strong>Tahun Rekod:</strong> <span id="speciesYear"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h4>Lokasi Spesies</h4>
+                    <div id="speciesMap" style="height:300px; border-radius:8px;"></div>
+
+                    <hr>
+
+                    <h4>Graf Taburan Spesies</h4>
+                    <canvas id="speciesChart" height="90"></canvas>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success" onclick="exportSpeciesReport()">
+                        <i class="fa fa-download"></i> Export Report
+                    </button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal" onclick="closeSpeciesModal()">
+                        Tutup
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let speciesMap = null;
+        let speciesMarker = null;
+        let speciesChart = null;
+
+        const speciesData = {
+            meranti: {
+                name: "Meranti",
+                scientific: "Shorea leprosula",
+                category: "Flora",
+                habitat: "Hutan Dipterokarpa",
+                state: "Pahang",
+                plot: "VJR Gunung Tapis",
+                year: "2025",
+                iucn: "VU",
+                iucnClass: "vu",
+                image: "img/meranti.jpg",
+                coords: [4.2150, 102.1250],
+                chartLabels: ["Pahang", "Perak", "Johor"],
+                chartValues: [12, 5, 3]
+            },
+            harimau: {
+                name: "Harimau Malaya",
+                scientific: "Panthera tigris jacksoni",
+                category: "Fauna",
+                habitat: "Hutan Tropika",
+                state: "Kelantan",
+                plot: "HCVA Gunung Stong",
+                year: "2025",
+                iucn: "CR",
+                iucnClass: "cr",
+                image: "img/harimau.jpg",
+                coords: [5.3490, 101.9640],
+                chartLabels: ["Kelantan", "Pahang", "Terengganu"],
+                chartValues: [4, 2, 1]
+            },
+            enggang: {
+                name: "Enggang",
+                scientific: "Buceros rhinoceros",
+                category: "Fauna",
+                habitat: "Hutan Hujan",
+                state: "Perak",
+                plot: "Royal Belum",
+                year: "2024",
+                iucn: "EN",
+                iucnClass: "en",
+                image: "img/enggang.jpg",
+                coords: [5.6230, 101.3430],
+                chartLabels: ["Perak", "Kelantan", "Pahang"],
+                chartValues: [8, 3, 2]
+            }
+        };
+
+        function openSpeciesModal(id) {
+            const s = speciesData[id];
+            if (!s) return;
+
+            document.getElementById("speciesName").textContent = s.name;
+            document.getElementById("speciesScientific").textContent = s.scientific;
+            document.getElementById("speciesCategory").textContent = s.category;
+            document.getElementById("speciesHabitat").textContent = s.habitat;
+            document.getElementById("speciesState").textContent = s.state;
+            document.getElementById("speciesPlot").textContent = s.plot;
+            document.getElementById("speciesYear").textContent = s.year;
+            document.getElementById("speciesImage").src = s.image;
+            document.getElementById("speciesIUCN").innerHTML =
+                '<span class="iucn-badge ' + s.iucnClass + '">' + s.iucn + '</span>';
+
+            $('#speciesModal').modal('show');
+
+            setTimeout(function () {
+                loadSpeciesMap(s);
+                loadSpeciesChart(s);
+            }, 300);
+        }
+
+        function closeSpeciesModal() {
+            $('#speciesModal').modal('hide');
+        }
+
+        function loadSpeciesMap(s) {
+            if (speciesMap) {
+                speciesMap.remove();
+                speciesMap = null;
+            }
+
+            speciesMap = L.map('speciesMap').setView(s.coords, 8);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(speciesMap);
+
+            speciesMarker = L.marker(s.coords).addTo(speciesMap)
+                .bindPopup("<strong>" + s.name + "</strong><br>" + s.state)
+                .openPopup();
+
+            setTimeout(function () {
+                speciesMap.invalidateSize();
+            }, 200);
+        }
+
+        function loadSpeciesChart(s) {
+            const ctx = document.getElementById("speciesChart").getContext("2d");
+
+            if (speciesChart) {
+                speciesChart.destroy();
+            }
+
+            speciesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: s.chartLabels,
+                    datasets: [{
+                        label: 'Bilangan Rekod',
+                        data: s.chartValues,
+                        backgroundColor: '#1ab394'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function exportSpeciesReport() {
+            alert("Laporan spesies berjaya dijana (prototype)");
+        }
+    </script>
+</body>
+</html>
